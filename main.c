@@ -5,6 +5,7 @@ int main() {
     int choice;
     AddressBook addressBook;
     initialize(&addressBook);
+    int sortChoice;
     int sortCriteria; // Initialize the address book
 
     do {
@@ -33,7 +34,31 @@ int main() {
                 deleteContact(&addressBook);
                 break;
             case 5:          
-                listContacts(&addressBook,sortCriteria);
+                //listContacts(&addressBook,sortCriteria);
+                //break;
+                printf("\nSort contacts by:\n");
+
+                printf("1. Name\n");
+                printf("2. Phone\n");
+                printf("3. Email\n");
+
+                printf("Enter sorting choice: ");
+
+                scanf("%d", &sortChoice);
+
+
+                if (sortChoice < 1 || sortChoice > 3)
+                {
+                    printf("Invalid sorting choice!\n");
+                }
+                else
+                {
+                    listContacts(
+                        &addressBook,
+                        sortChoice
+                    );
+                }
+
                 break;
             case 6:
                 printf("Saving...\n");

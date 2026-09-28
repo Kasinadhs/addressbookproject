@@ -493,8 +493,187 @@ if (found == 0)
 void editContact(AddressBook *addressBook)
 {
 	/* Define the logic for Editcontact */
-    
+    int i;
+    int found=0;
+    int choice;
+    char searchName[50];
+    char newName[50];
+    char newPhone[20];
+    char newEmail[50];
+    printf("\nEnter the name of contact to edit: ");
+
+    scanf(" %[^\n]", searchName);
+
+     for(i = 0; i < addressBook->contactCount; i++)
+    {
+        if(strcmp(addressBook->contacts[i].name,
+                  searchName) == 0)
+        {
+            found = 1;
+
+            break;
+        }
+    }
+
+
+    if(found == 0)
+    {
+        printf("\nContact not found!\n");
+
+        return;
+    }
+    printf("\nContact Found!\n");
+
+    printf("1. Edit Name\n");
+    printf("2. Edit Phone\n");
+    printf("3. Edit Email\n");
+
+    printf("Enter choice: ");
+
+    scanf("%d", &choice);
+
+
+    switch(choice)
+    {
+        case 1:
+
+            while(1)
+            {
+                printf("Enter new name: ");
+
+                scanf(" %[^\n]", newName);
+
+
+                if(!validateName(newName))
+                {
+                    printf("Invalid name!\n");
+
+                    continue;
+                }
+
+                strcpy(addressBook->contacts[i].name,
+                       newName);
+
+                break;
+            }
+            printf("\nName updated successfully!\n");
+
+            break;
+            case 2:
+
+            while(1)
+            {
+                printf("Enter new phone: ");
+
+                scanf("%19s", newPhone);
+
+
+                if(!validatePhone(newPhone))
+                {
+                    printf("Invalid phone number!\n");
+
+                    continue;
+                }
+
+                {
+                    int j;
+                    int duplicate = 0;
+                    for(j = 0;
+                        j < addressBook->contactCount;
+                        j++)
+                    {
+                        if(j != i &&
+                           strcmp(addressBook->contacts[j].phone,
+                                  newPhone) == 0)
+                        {
+                            duplicate = 1;
+
+                            break;
+                        }
+                    }
+
+
+                    if(duplicate)
+                    {
+                        printf("Phone number already exists!\n");
+
+                        continue;
+                        }
+                }
+
+
+                strcpy(addressBook->contacts[i].phone,
+                       newPhone);
+
+                break;
+            }
+
+            printf("\nPhone updated successfully!\n");
+
+            break;
+            case 3:
+
+            while(1)
+            {
+                printf("Enter new email: ");
+
+                scanf("%49s", newEmail);
+
+
+                if(!validateEmail(newEmail))
+                {
+                    printf("Invalid email!\n");
+
+                    continue;
+                }
+
+
+            
+                {
+                    int j;
+                    int duplicate = 0;
+for(j = 0;
+                        j < addressBook->contactCount;
+                        j++)
+                    {
+                        if(j != i &&
+                           strcmp(addressBook->contacts[j].email,
+                                  newEmail) == 0)
+                        {
+                            duplicate = 1;
+
+                            break;
+                        }
+                    }
+
+
+                    if(duplicate)
+                    {
+                        printf("Email already exists!\n");
+
+                        continue;
+                    }
+                }
+                strcpy(addressBook->contacts[i].email,
+                       newEmail);
+
+                break;
+            }
+
+            printf("\nEmail updated successfully!\n");
+
+            break;
+
+
+        default:
+
+            printf("\nInvalid edit choice!\n");
+
+            break;
+    }
 }
+
+
 
 void deleteContact(AddressBook *addressBook)
 {

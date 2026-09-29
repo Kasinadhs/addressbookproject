@@ -15,20 +15,16 @@ typedef struct {
 } AddressBook;
 
 void createContact(AddressBook *addressBook);
+int validate_phone(AddressBook *addressBook, char *number, int flag);
+int validate_email(AddressBook *addressBook, char *mail, int flag);
 void searchContact(AddressBook *addressBook);
 void editContact(AddressBook *addressBook);
+int contact_search(AddressBook *addressBook, int s_choice, int *found_i);
 void deleteContact(AddressBook *addressBook);
-void listContacts(AddressBook *addressBook, int sortCriteria);
+void listContacts(AddressBook *addressBook);
+void swapContacts(Contact *a, Contact *b);
 void initialize(AddressBook *addressBook);
-void saveContactsToFile(AddressBook *AddressBook);
-
-
-int validateName(char name[]);
-int validatePhone(char phone[]);
-int validateEmail(char email[]);
-
-int isDuplicatePhone(AddressBook *addressBook, char phone[]);
-int isDuplicateEmail(AddressBook *addressBook, char email[]);
-
+void saveContactsToFile(AddressBook *addressBook);
+void saveAndExit(AddressBook *addressBook);
 
 #endif

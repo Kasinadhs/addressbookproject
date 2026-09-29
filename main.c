@@ -20,57 +20,38 @@ int main() {
         printf("Enter your choice: ");
         scanf("%d", &choice);
         
-        switch (choice) {
-            case 1:
-                createContact(&addressBook);
-                break;
-            case 2:
-                searchContact(&addressBook);
-                break;
-            case 3:
-                editContact(&addressBook);
-                break;
-            case 4:
-                deleteContact(&addressBook);
-                break;
-            case 5:          
-                //listContacts(&addressBook,sortCriteria);
-                //break;
-                printf("\nSort contacts by:\n");
+        switch (choice) 
+		{
+	    	case 1:
+			createContact(&addressBook);
+			break;
+	    
+			case 2:
+			searchContact(&addressBook);
+			break;
+	    
+			case 3:
+			editContact(&addressBook);
+			break;
+	    
+			case 4:
+			deleteContact(&addressBook);
+			break;
+	    
+			case 5:
+			listContacts(&addressBook);
+			break;
+	    
+			case 6:
+			printf("Saving and Exiting...\n");
+			saveAndExit(&addressBook);
+			break;
+	    
+			default:
+			printf("Invalid choice. Please try again.\n");
+		}
+    } while (choice != 6);
 
-                printf("1. Name\n");
-                printf("2. Phone\n");
-                printf("3. Email\n");
-
-                printf("Enter sorting choice: ");
-
-                scanf("%d", &sortChoice);
-
-
-                if (sortChoice < 1 || sortChoice > 3)
-                {
-                    printf("Invalid sorting choice!\n");
-                }
-                else
-                {
-                    listContacts(
-                        &addressBook,
-                        sortChoice
-                    );
-                }
-
-                break;
-            case 6:
-                printf("Saving...\n");
-                //saveContactsToFile(&addressBook);
-                break;   
-            case 7:
-                printf("Exiting...\n");
-                break;
-            default:
-                printf("Invalid choice. Please try again.\n");
-        }
-    } while (choice != 7);
-    
-       return 0;
+    //cleanup(); // Cleanup any resources before exiting
+    return 0;
 }

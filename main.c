@@ -52,6 +52,5 @@ int main() {
 		}
     } while (choice != 6);
 
-    //cleanup(); // Cleanup any resources before exiting
     return 0;
 }

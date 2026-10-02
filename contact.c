@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include "contact.h"
 #include "file.h"
 
@@ -72,10 +73,16 @@ void createContact(AddressBook *addressBook)
         printf("Address Book is FULL, Cannot add more contacts\n\n");
         return;
     }
-    
 
+
+printf("Enter contact name : ");
+scanf(" %[^\n]", addressBook -> contacts[addressBook -> contactCount].name);
+
+while(!validate_name(addressBook -> contacts[addressBook -> contactCount].name))
+{
     printf("Enter contact name : ");
     scanf(" %[^\n]", addressBook -> contacts[addressBook -> contactCount].name);
+}
 
     char number[15];
     printf("Enter phone number : ");
@@ -97,30 +104,54 @@ void createContact(AddressBook *addressBook)
         printf("Enter email id : ");
         scanf(" %[^\n]", mail);
     }
-
     strcpy(addressBook -> contacts[addressBook -> contactCount].email, mail);
-
     addressBook -> contactCount++;
-    printf("Congrats, New Contact Created!!!\n\n");
+    printf("New Contact Created!!!\n\n");
+
 }
+
+int validate_name(char *name)
+{
+    int i;
+    if(strlen(name) < 2)
+    {
+        printf("Invalid Name!!! Minimum 2 characters required.\n\n");
+        return 0;
+    }
+    for(i = 0; i < strlen(name); i++)
+    {
+         if((name[i] >= 'A' && name[i] <= 'Z') ||
+           (name[i] >= 'a' && name[i] <= 'z') ||
+           (name[i] >= '0' && name[i] <= '9') ||
+           name[i] == ' ')
+        {
+            
+        }
+        else
+        {
+            printf("Invalid Name!!! Only alphabets, digits and spaces are allowed.\n\n");
+            return 0;
+        }
+    }
+
+    return 1;
+}
+
 
 int validate_phone(AddressBook *addressBook, char *number, int flag)
 {
+
     int i = 0;
-    
- 
     if(strlen(number) != 10)
     {
         printf("Invalid phone number!! Enter Again...\n\n");
         return 0;
     }
-
     if (number[0] < '6' || number[0] > '9')
     {
         printf("Phone number must start with 6, 7, 8 or 9!!\n\n");
         return 0;
     }
-
     for(i = 0; i < 10; i++)
     {
         if (number[i] <'0' || number[i] > '9')
@@ -129,7 +160,6 @@ int validate_phone(AddressBook *addressBook, char *number, int flag)
                 return 0;
             }
     }
-
     if(flag == 1)
     {
         for (i = 0; i < addressBook -> contactCount; i++)
@@ -145,10 +175,8 @@ int validate_phone(AddressBook *addressBook, char *number, int flag)
     {
         return 1;
     }
-
     return 1;
 }
-
 int validate_email(AddressBook *addressBook, char *mail, int flag)
 {
     int i;
@@ -166,7 +194,6 @@ int validate_email(AddressBook *addressBook, char *mail, int flag)
             return 0;
         }
     }
-
     if (mail[0] == '.')
     {
         printf("Invalid Email ID!!! Email should not start with '.'\n\n");
@@ -187,13 +214,11 @@ int validate_email(AddressBook *addressBook, char *mail, int flag)
         }
     }
 
-
     if (at_count > 1) 
     {
         printf("Invalid Email ID!!! Multiple '@' not allowed\n\n");
         return 0;
     }
-
 
     int dot_after_at = 0;
     for (i = at_i + 1; i < strlen(mail); i++) 
@@ -209,13 +234,11 @@ int validate_email(AddressBook *addressBook, char *mail, int flag)
         return 0;
     }
 
-
     if (strlen(mail) < 4 || strcmp(mail + strlen(mail) - 4, ".com") != 0) 
     {
         printf("Invalid Email ID!!! Email should end with .com\n\n");
         return 0;
     }
-
 
     for (i = 0; i < strlen(mail) - 4; i++) 
     {
@@ -229,13 +252,11 @@ int validate_email(AddressBook *addressBook, char *mail, int flag)
         printf("Invalid Email ID!!! '.com' should be at the end\n\n");
         return 0;
     }
-
     if (dot_i == at_i + 1) 
     {
             printf("Invalid Email ID!!! At least one character required before '.com'\n\n");
             return 0;
     }
-
     if (at_i == -1 || dot_i == -1 || dot_i < at_i || dot_i > strlen(mail) - 4) 
     {
         printf("Invalid Email ID!!! Enter Again..\n\n");
@@ -252,11 +273,8 @@ int validate_email(AddressBook *addressBook, char *mail, int flag)
             }
         }
     }
-
     return 1;
-
 }
-
 void searchContact(AddressBook *addressBook) 
 {
     printf("\n******************************************************\n");
@@ -271,15 +289,13 @@ void searchContact(AddressBook *addressBook)
     printf("2.Phone Number\n");
     printf("3.Email\n");
     scanf("%d", &choose);
-    
-  
+
     switch (choose)
     {
     case 1:
         printf("Enter contact name : ");
         scanf(" %[^\n]", search);
         int matched = 0;
-
         for (int i = 0; i < addressBook->contactCount; i++)
         {
             char *space = strchr(addressBook -> contacts[i].name, ' ');
@@ -401,17 +417,13 @@ void editContact(AddressBook *addressBook)
     printf("3.Email\n");
     scanf("%d", &s_choice);
 
-   
     f_count = contact_search(addressBook, s_choice, found_i);
-
 
     if(f_count == 0)
     {
         printf("Contact not found!!!\n\n");
         return;
     }
-
-
     if(f_count > 1)
     {
         printf("Multiple contacts Found. Please select one :\n");
@@ -419,18 +431,14 @@ void editContact(AddressBook *addressBook)
         {
             printf("%d. Name: %s, Phone: %s, Email: %s\n", i + 1, addressBook -> contacts[found_i[i]].name, addressBook -> contacts[found_i[i]].phone, addressBook -> contacts[found_i[i]].email);
         }
-    
-
         int serial;
         printf("Enter serial number : ");
         scanf("%d", &serial);
-
         if(serial < 1 || serial > f_count)
         {
             printf("Invalid Serial Number!!!\n\n");
             return;
         }
-
         index = found_i[serial - 1];
     }
 
@@ -501,9 +509,7 @@ int contact_search(AddressBook *addressBook, int s_choice, int *found_i)
             printf("Enter email : ");
             break;
     }
-
     scanf(" %[^\n]", search);
-
     for (i = 0; i < addressBook -> contactCount; i++)
     {
         switch (s_choice)

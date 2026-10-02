@@ -15,6 +15,7 @@ typedef struct {
 } AddressBook;
 
 void createContact(AddressBook *addressBook);
+int validate_name(char *name);
 int validate_phone(AddressBook *addressBook, char *number, int flag);
 int validate_email(AddressBook *addressBook, char *mail, int flag);
 void searchContact(AddressBook *addressBook);

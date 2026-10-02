@@ -194,6 +194,15 @@ int validate_email(AddressBook *addressBook, char *mail, int flag)
             return 0;
         }
     }
+    
+    for (i = 0; i < strlen(mail); i++)
+{
+    if (mail[i] == '-')
+    {
+        printf("Invalid Email ID!!! '-' is not allowed\n\n");
+        return 0;
+    }
+}
     if (mail[0] == '.')
     {
         printf("Invalid Email ID!!! Email should not start with '.'\n\n");
